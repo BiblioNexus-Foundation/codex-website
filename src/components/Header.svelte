@@ -28,7 +28,7 @@
           <li>
             <a
               class="hover:text-gray-500 dark:hover:text-gray-300"
-              href="https://ryder.dev">Ideas Blog</a
+              href="https://ryder.dev/vs-code-translation/">Ideas Blog</a
             >
           </li>
           <li>

@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@sveltejs/adapter-auto": "^3.2.2",
-    "lucide-svelte": "^0.408.0"
+    "lucide-svelte": "^0.408.0",
+    "node-fetch": "2"
   }
 }

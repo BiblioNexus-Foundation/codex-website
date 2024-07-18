@@ -1,0 +1,13 @@
+[[edge_functions]]
+  path = "/api/latest-release"
+  function = "getLatestRelease"
+
+[functions]
+  included_files = ["netlify/functions/**"]
+
+[build]
+  command = "npm run build"
+  publish = "public"
+
+[[plugins]]
+  package = "@netlify/plugin-functions-core"

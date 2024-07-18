@@ -14,9 +14,7 @@
   let parsedRelease: ParsedRelease;
 
   onMount(async () => {
-    const response = await fetch(
-      'https://api.github.com/repos/BiblioNexus-Foundation/codex/releases/latest',
-    );
+    const response = await fetch('/api/latest-release');
     const releaseData = await response.json();
     parsedRelease = parseReleaseData(releaseData.assets);
   });
