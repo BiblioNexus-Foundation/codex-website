@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
-    "preview": "vite preview",
-    "check": "svelte-check --tsconfig ./tsconfig.json"
+    "preview": "vite preview"
   },
   "devDependencies": {
     "@melt-ui/pp": "^0.1.2",
