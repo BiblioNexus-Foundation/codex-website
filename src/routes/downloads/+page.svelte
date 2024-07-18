@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-  <title>Downloads</title>
+  <title>Codex Downloads</title>
 </svelte:head>
 
 <h1 class="text-3xl font-bold mb-6">Downloads</h1>
