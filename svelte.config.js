@@ -1,11 +1,19 @@
 import sveltePreprocess from "svelte-preprocess";
+import adapter from '@sveltejs/adapter-auto';
 
-export default {
-  // Consult https://github.com/sveltejs/svelte-preprocess
-  // for more information about preprocessors
+/** @type {import('@sveltejs/kit').Config} */
+const config = {
   preprocess: [
     sveltePreprocess({
       postcss: true,
     }),
   ],
+  kit: {
+    adapter: adapter(),
+    alias: {
+      $lib: './src/lib'
+    }
+  }
 };
+
+export default config;
