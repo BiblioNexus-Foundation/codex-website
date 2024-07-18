@@ -12,7 +12,6 @@ export default defineConfig({
     }
   },
   build: {
-    outDir: 'dist', // Make sure this matches your actual output directory
     assetsDir: 'assets',
   },
   server: {
