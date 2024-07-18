@@ -22,7 +22,7 @@
     <p class="text-gray-600">Empowering Translators with Cutting-Edge AI</p>
   </div>
   <div class="mx-auto max-w-4xl">
-    <div class="mx-auto w-full rounded-xl bg-neutral-100 p-6 my-8">
+    <div class="mx-auto w-full rounded-xl p-6 mb-8">
       <div
         class="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4"
       >

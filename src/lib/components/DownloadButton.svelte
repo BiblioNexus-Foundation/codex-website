@@ -59,23 +59,28 @@
   function getDownloadUrl(option: string): string {
     if (!parsedRelease) return '#';
     const files = parsedRelease.files[os];
-    let file;
+    let file: ReleaseFile | undefined;
 
     switch (os) {
       case 'macos':
         file = files.find((f: ReleaseFile) =>
           option === 'M1/M2/M3'
-            ? f.name.includes('arm64')
-            : f.name.includes('x64'),
+            ? f.name.includes('arm64') && f.name.endsWith('.dmg')
+            : f.name.includes('x64') && f.name.endsWith('.dmg')
         );
         break;
       case 'windows':
-        file = files.find(
-          (f: ReleaseFile) => f.name.includes('x64') && f.name.endsWith('.exe'),
+        file = files.find((f: ReleaseFile) => 
+          f.name.includes('x64') && f.name.endsWith('.exe')
         );
         break;
       case 'linux':
-        file = files.find((f: ReleaseFile) => f.name.includes(option));
+        // Prioritize .deb files, then fall back to .AppImage
+        file = files.find((f: ReleaseFile) => 
+          f.name.includes(option) && f.name.endsWith('.deb')
+        ) || files.find((f: ReleaseFile) => 
+          f.name.includes(option) && f.name.endsWith('.AppImage')
+        );
         break;
     }
 
@@ -84,6 +89,13 @@
 
   function toggleDropdown() {
     showDropdown = !showDropdown;
+  }
+
+  function shouldShowDropdown(): boolean {
+    return (
+      config.options.length > 1 ||
+      (os === 'windows' && config.options.length === 1)
+    );
   }
 </script>
 
@@ -102,9 +114,9 @@
         <span class="text-base">{config.text}</span>
       </div>
     </button>
-    {#if showDropdown && config.options.length > 1}
+    {#if showDropdown && shouldShowDropdown()}
       <div
-        class="absolute mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
+        class="absolute mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-[60]"
       >
         <div class="py-1">
           {#each config.options as option}
@@ -117,15 +129,9 @@
           {/each}
         </div>
       </div>
-    {:else if config.options.length === 1}
-      <a
-        href={getDownloadUrl(config.options[0])}
-        class="block w-full rounded-md bg-gradient-to-br {config.gradient} py-3 px-4 font-medium text-white {config.hoverGradient} focus:outline-none focus:ring-2 {config.ring} animate-gradient-x mt-2"
-      >
-        <div class="flex items-center justify-center space-x-2">
-          <i class="fab {config.icon} text-2xl text-white"></i>
-          <span class="text-base">{config.text} ({config.options[0]})</span>
-        </div>
+    {:else if !shouldShowDropdown()}
+      <a href={getDownloadUrl(config.options[0])} class="sr-only">
+        Download {config.text} ({config.options[0]})
       </a>
     {/if}
   {/if}
