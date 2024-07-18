@@ -1,12 +1,13 @@
 <script lang="ts">
   import Navigation from './Navigation.svelte';
+  import Logo from './Logo.svelte';
 </script>
 
 <footer class="bg-white">
   <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
     <div class="xl:grid xl:grid-cols-3 xl:gap-8">
       <div class="space-y-8 xl:col-span-1">
-        <img src="/bible-logo.png" class="h-10" alt="BiblioNexus Logo" />
+        <Logo size="large" />
         <p class="text-gray-500 text-base">Fully Open, Completely Free.</p>
       </div>
       <div class="mt-12 grid grid-cols-2 gap-8 xl:mt-0 xl:col-span-2">
