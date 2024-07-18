@@ -11,6 +11,10 @@ export default defineConfig({
       $lib: path.resolve('./src/lib')
     }
   },
+  build: {
+    outDir: 'dist', // Make sure this matches your actual output directory
+    assetsDir: 'assets',
+  },
   server: {
     proxy: {
       '/api/latest-release': {
