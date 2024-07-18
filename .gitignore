@@ -24,5 +24,3 @@ dist-ssr
 *.sw?
 .svelte-kit
 static/build
-pnpm-lock.yaml
-/pnpm-lock.yaml

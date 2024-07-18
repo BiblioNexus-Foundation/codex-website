@@ -10,6 +10,11 @@
   let parsedRelease: ParsedRelease;
   let error: string | null = null;
 
+  interface ReleaseFile {
+    name: string;
+    url: string;
+  }
+
   onMount(async () => {
     try {
       const response = await fetch('/api/latest-release');
@@ -53,6 +58,27 @@
         return 'fa-question';
     }
   }
+
+  function getChecksumFiles(os: string, fileName: string) {
+    const files = parsedRelease.files[os as keyof typeof parsedRelease.files];
+    return {
+      sha1: files.find((f: ReleaseFile) => f.name === `${fileName}.sha1`),
+      sha256: files.find((f: ReleaseFile) => f.name === `${fileName}.sha256`),
+    };
+  }
+
+  function getFilesForOS(os: 'macos' | 'windows' | 'linux'): ReleaseFile[] {
+    return parsedRelease.files[os];
+  }
+
+  function getOSFiles() {
+    return ['macos', 'windows', 'linux'].flatMap((os) =>
+      getFilesForOS(os as 'macos' | 'windows' | 'linux').map((file) => ({
+        os,
+        file,
+      })),
+    );
+  }
 </script>
 
 <div class="overflow-x-auto">
@@ -92,42 +118,41 @@
         </tr>
       </thead>
       <tbody class="bg-white divide-y divide-gray-200">
-        {#each ['macos', 'windows', 'linux'] as os}
-          {#each parsedRelease.files[os] as file}
-            {@const { name, type, arch } = mapFileToUserFriendlyName(file)}
-            {#if !file.name.endsWith('.sha1') && !file.name.endsWith('.sha256')}
-              <tr>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <i class="fab {getOsIcon(os)} text-xl"></i>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <a href={file.url} class="text-blue-600 hover:text-blue-800"
-                    >{name}</a
-                  >
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <span
-                    class="px-2 py-1 text-xs font-semibold rounded-full {getTypeColor(
-                      type,
-                    )}"
-                  >
-                    {type}
-                  </span>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <span
-                    class="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800"
-                  >
-                    {arch}
-                  </span>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="flex space-x-2">
-                    {#if parsedRelease.files[os].find((f) => f.name === `${file.name}.sha1`)}
+        {#each getOSFiles() as { os, file }}
+          {@const { name, type, arch } = mapFileToUserFriendlyName(file)}
+          {#if !file.name.endsWith('.sha1') && !file.name.endsWith('.sha256')}
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <i class="fab {getOsIcon(os)} text-xl"></i>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <a href={file.url} class="text-blue-600 hover:text-blue-800"
+                  >{name}</a
+                >
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span
+                  class="px-2 py-1 text-xs font-semibold rounded-full {getTypeColor(
+                    type,
+                  )}"
+                >
+                  {type}
+                </span>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span
+                  class="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800"
+                >
+                  {arch}
+                </span>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="flex space-x-2">
+                  {#if parsedRelease}
+                    {@const checksumFiles = getChecksumFiles(os, file.name)}
+                    {#if checksumFiles.sha1}
                       <a
-                        href={parsedRelease.files[os].find(
-                          (f) => f.name === `${file.name}.sha1`,
-                        )?.url}
+                        href={checksumFiles.sha1.url}
                         title="SHA1 Checksum"
                         class="text-gray-500 hover:text-gray-700"
                       >
@@ -135,11 +160,9 @@
                         <span class="sr-only">SHA1</span>
                       </a>
                     {/if}
-                    {#if parsedRelease.files[os].find((f) => f.name === `${file.name}.sha256`)}
+                    {#if checksumFiles.sha256}
                       <a
-                        href={parsedRelease.files[os].find(
-                          (f) => f.name === `${file.name}.sha256`,
-                        ).url}
+                        href={checksumFiles.sha256.url}
                         title="SHA256 Checksum"
                         class="text-gray-500 hover:text-gray-700"
                       >
@@ -147,11 +170,11 @@
                         <span class="sr-only">SHA256</span>
                       </a>
                     {/if}
-                  </div>
-                </td>
-              </tr>
-            {/if}
-          {/each}
+                  {/if}
+                </div>
+              </td>
+            </tr>
+          {/if}
         {/each}
       </tbody>
     </table>
