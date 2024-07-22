@@ -19,7 +19,9 @@
     <h1 class="text-4xl font-semibold leading-snug tracking-tight md:text-5xl">
       Codex Translation Editor
     </h1>
-    <p class="text-gray-600">Empowering Translators with Cutting-Edge AI</p>
+    <p class="text-gray-600 dark:text-gray-100">
+      Empowering Translators with Cutting-Edge AI
+    </p>
   </div>
   <div class="mx-auto max-w-4xl">
     <div class="mx-auto w-full rounded-xl p-6 mb-8">
