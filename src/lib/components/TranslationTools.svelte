@@ -18,7 +18,7 @@
           class="flex w-full overflow-hidden rounded-xl bg-neutral-700 text-white"
         >
           <div
-            class="relative flex h-[250px] w-full flex-col overflow-hidden px-10 pt-6 text-left md:h-[258px]"
+            class="relative flex h-[800px] w-full flex-col overflow-hidden px-10 pt-6 text-left md:h-[800px]"
           >
             <div class="flex flex-col space-y-1">
               <h3 class="text-xl font-medium text-white">
@@ -28,9 +28,14 @@
                 Get suggestions, corrections, and more in a simple text editor.
               </p>
             </div>
-            <img
+            <!-- <img
               class="absolute rounded-xl mt-28 -ml-8 w-full min-w-[700px] md:mt-18 7xl:mt-16"
               src="/suggestions.png"
+              alt="Translation interface"
+            /> -->
+            <img
+              class="absolute rounded-xl mt-28 -ml-8 w-full min-w-[700px] md:mt-18 7xl:mt-16"
+              src="/diagnostics.webp"
               alt="Translation interface"
             />
           </div>
@@ -39,7 +44,7 @@
           class="flex w-full overflow-hidden rounded-xl bg-neutral-700 text-white"
         >
           <div
-            class="relative flex h-[300px] w-full flex-col overflow-hidden px-10 py-9 text-left md:h-[408px]"
+            class="relative flex h-[800px] w-full flex-col overflow-hidden px-10 py-9 text-left md:h-[800px]"
           >
             <div class="flex flex-col space-y-1">
               <h3 class="text-xl font-medium text-white">
@@ -49,9 +54,14 @@
                 Learning about the source texts is like talking to an expert.
               </p>
             </div>
-            <img
+            <!-- <img
               class="absolute mt-28 -ml-8 w-full min-w-[700px] md:mt-18 7xl:mt-16"
               src="/chat.png"
+              alt="Chat interface"
+            /> -->
+            <img
+              class="absolute mt-28 -ml-8 w-full min-w-[700px] md:mt-18 7xl:mt-16"
+              src="/translation-insights.webp"
               alt="Chat interface"
             />
           </div>
@@ -65,7 +75,7 @@
             class="flex w-full overflow-hidden rounded-xl bg-neutral-700 text-white"
           >
             <div
-              class="relative flex w-full h-[550px] flex-col overflow-hidden px-10 py-9 text-left"
+              class="relative flex w-full h-[800px] flex-col overflow-hidden px-10 py-9 text-left"
             >
               <div class="flex flex-col space-y-1">
                 <h3 class="text-xl font-medium text-white">
@@ -76,9 +86,14 @@
                   you can focus on the work that matters.
                 </p>
               </div>
-              <img
+              <!-- <img
                 class="absolute mt-28 -ml-8 w-full min-w-[700px] md:mt-18 7xl:mt-16"
                 src="/copilot-features.png"
+                alt="Chat interface"
+              /> -->
+              <img
+                class="absolute mt-28 -ml-8 w-full min-w-[700px] md:mt-18 7xl:mt-16"
+                src="/orchestration.webp"
                 alt="Chat interface"
               />
             </div>

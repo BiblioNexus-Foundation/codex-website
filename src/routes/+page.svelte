@@ -14,10 +14,10 @@
   <meta name="og:title" content="Codex Translation Editor" />
   <meta
     name="og:description"
-    content="Codex Translation Editor - AI-first Bible translation editor"
+    content="Codex Translation Editor - AI-first translation editor"
   />
   <meta name="og:image" content="/codex-icon-2024.svg" />
-  <meta name="og:url" content="https://codex.bible" />
+  <meta name="og:url" content="https://codexeditor.app" />
   <meta name="og:site_name" content="Codex Translation Editor" />
   <meta name="og:locale" content="en_US" />
 </svelte:head>

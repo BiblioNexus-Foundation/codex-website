@@ -1,15 +1,5 @@
 <script lang="ts">
-  import DownloadButton from './DownloadButton.svelte';
-
-  let showMacosDropdown = false;
-  let showLinuxDropdown = false;
-  let showWindowsDropdown = false;
-
-  function toggleDropdown(os: 'macos' | 'windows' | 'linux'): void {
-    showMacosDropdown = os === 'macos' ? !showMacosDropdown : false;
-    showWindowsDropdown = os === 'windows' ? !showWindowsDropdown : false;
-    showLinuxDropdown = os === 'linux' ? !showLinuxDropdown : false;
-  }
+  import AllDownloadButtons from './AllDownloadButtons.svelte';
 </script>
 
 <div
@@ -24,27 +14,7 @@
     </p>
   </div>
   <div class="mx-auto max-w-4xl">
-    <div class="mx-auto w-full rounded-xl p-6 mb-8">
-      <div
-        class="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4"
-      >
-        <DownloadButton
-          os="macos"
-          showDropdown={showMacosDropdown}
-          {toggleDropdown}
-        />
-        <DownloadButton
-          os="windows"
-          showDropdown={showWindowsDropdown}
-          {toggleDropdown}
-        />
-        <DownloadButton
-          os="linux"
-          showDropdown={showLinuxDropdown}
-          {toggleDropdown}
-        />
-      </div>
-    </div>
+    <AllDownloadButtons />
 
     <img
       src="/genesis-ui.jpg"

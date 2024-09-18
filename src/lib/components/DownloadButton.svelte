@@ -7,10 +7,11 @@
   } from '$lib/releaseDataUtils';
 
   export let os: 'macos' | 'windows' | 'linux';
+  export let showDropdown: boolean;
+  export let toggleDropdown: (os: 'macos' | 'windows' | 'linux') => void;
 
   let parsedRelease: ParsedRelease;
   let error: string | null = null;
-  let showDropdown = false;
 
   onMount(async () => {
     try {
@@ -46,7 +47,7 @@
     },
     linux: {
       icon: 'fa-linux',
-      text: 'Download for Linux',
+      text: 'Download for Linux (Deb)',
       gradient: 'from-purple-500 via-pink-400 to-red-600',
       hoverGradient: 'hover:from-pink-600 hover:via-pink-500 hover:to-red-700',
       ring: 'focus:ring-pink-400',
@@ -66,29 +67,33 @@
         file = files.find((f: ReleaseFile) =>
           option === 'M1/M2/M3'
             ? f.name.includes('arm64') && f.name.endsWith('.dmg')
-            : f.name.includes('x64') && f.name.endsWith('.dmg')
+            : f.name.includes('x64') && f.name.endsWith('.dmg'),
         );
         break;
       case 'windows':
-        file = files.find((f: ReleaseFile) => 
-          f.name.includes('x64') && f.name.endsWith('.exe')
+        file = files.find(
+          (f: ReleaseFile) => f.name.includes('x64') && f.name.endsWith('.exe'),
         );
         break;
       case 'linux':
         // Prioritize .deb files, then fall back to .AppImage
-        file = files.find((f: ReleaseFile) => 
-          f.name.includes(option) && f.name.endsWith('.deb')
-        ) || files.find((f: ReleaseFile) => 
-          f.name.includes(option) && f.name.endsWith('.AppImage')
-        );
+        file =
+          files.find(
+            (f: ReleaseFile) =>
+              f.name.includes(option) && f.name.endsWith('.deb'),
+          ) ||
+          files.find(
+            (f: ReleaseFile) =>
+              f.name.includes(option) && f.name.endsWith('.AppImage'),
+          );
         break;
     }
 
     return file ? file.url : '#';
   }
 
-  function toggleDropdown() {
-    showDropdown = !showDropdown;
+  function handleToggleDropdown() {
+    toggleDropdown(os);
   }
 
   function shouldShowDropdown(): boolean {
@@ -106,7 +111,7 @@
     <p>Loading...</p>
   {:else}
     <button
-      on:click={toggleDropdown}
+      on:click={handleToggleDropdown}
       class="block w-full rounded-md bg-gradient-to-br {config.gradient} py-3 px-4 font-medium text-white {config.hoverGradient} focus:outline-none focus:ring-2 {config.ring} animate-gradient-x"
     >
       <div class="flex items-center justify-center space-x-2">
