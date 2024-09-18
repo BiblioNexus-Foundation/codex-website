@@ -11,6 +11,7 @@
   <meta name="description" content="Codex Translation Editor" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="/codex-icon-2024.svg" />
+  <link rel="canonical" href="https://codexeditor.app" />
   <meta name="og:title" content="Codex Translation Editor" />
   <meta
     name="og:description"
