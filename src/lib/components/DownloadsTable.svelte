@@ -24,7 +24,7 @@
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const releaseData = await response.json();
-      parsedRelease = parseReleaseData(releaseData.assets);
+      parsedRelease = parseReleaseData(releaseData.assets, releaseData);
     } catch (e) {
       console.error('Failed to fetch release data:', e);
       error = 'Failed to load release data. Please try again later.';
@@ -49,6 +49,7 @@
   }
 
   function getOsIcon(os: string): string {
+    console.log('os', os);
     switch (os.toLowerCase()) {
       case 'macos':
       case 'darwin':

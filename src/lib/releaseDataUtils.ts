@@ -81,17 +81,23 @@ export function parseReleaseData(assets: any[]): ParsedRelease {
         const fileName = asset.name.toLowerCase();
         let os: keyof ParsedRelease['files'] | null = null;
 
-        if (fileName.includes('darwin') ||
-            fileName.match(/\.dmg$/) ||
-            fileName.match(/mac(os)?/i)) {
+        if (fileName.match(/\.(dmg|pkg)$/) ||
+            fileName.includes('darwin') ||
+            fileName.includes('mac') ||
+            fileName.includes('apple') ||
+            fileName.includes('osx')) {
             os = 'macos';
-        } else if (fileName.includes('win32') ||
-            fileName.match(/\.(exe|msi)$/) ||
+        } else if (fileName.match(/\.(exe|msi)$/) ||
+            fileName.includes('win') ||
             fileName.includes('windows')) {
             os = 'windows';
-        } else if (fileName.includes('linux') ||
-            fileName.match(/\.(deb|rpm|appimage)$/) ||
-            (fileName.includes('tar.gz') && !fileName.includes('darwin') && !fileName.includes('win32'))) {
+        } else if (fileName.match(/\.(deb|rpm|appimage)$/) ||
+            fileName.includes('linux') ||
+            fileName.includes('ubuntu') ||
+            fileName.includes('debian') ||
+            fileName.includes('fedora') ||
+            fileName.includes('redhat') ||
+            (fileName.includes('tar.gz') && !fileName.includes('darwin') && !fileName.includes('win'))) {
             os = 'linux';
         }
 
@@ -99,8 +105,8 @@ export function parseReleaseData(assets: any[]): ParsedRelease {
             files[os].push({
                 name: asset.name,
                 url: asset.browser_download_url,
-                size: asset.size?.toString() || undefined,
-                date: asset.created_at || undefined
+                size: asset.size?.toString(),
+                date: asset.created_at
             });
         }
     });
