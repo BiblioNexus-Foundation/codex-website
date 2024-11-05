@@ -21,12 +21,12 @@ export const filePriority = {
 export interface ReleaseFile {
     name: string;
     url: string;
-    size: string;
-    date: string;
+    size?: string;
+    date?: string;
 }
 
 export interface ParsedRelease {
-    version: string;
+    version?: string;
     files: {
         macos: ReleaseFile[];
         windows: ReleaseFile[];
@@ -40,7 +40,7 @@ export function mapFileToUserFriendlyName(file: ReleaseFile): { name: string; ty
 
     let arch = "Universal";
     const fileName = file.name.toLowerCase();
-    
+
     if (fileName.includes("arm64")) {
         arch = "ARM64";
     } else if (fileName.includes("armhf")) {
@@ -71,51 +71,44 @@ export function mapFileToUserFriendlyName(file: ReleaseFile): { name: string; ty
 }
 
 export function parseReleaseData(assets: any[]): ParsedRelease {
-    const result: ParsedRelease = {
-        version: "", // You might want to set this from the release data
-        files: { macos: [], windows: [], linux: [] }
+    const files: ParsedRelease['files'] = {
+        macos: [],
+        windows: [],
+        linux: []
     };
 
     assets.forEach(asset => {
         const fileName = asset.name.toLowerCase();
         let os: keyof ParsedRelease['files'] | null = null;
 
-        if (fileName.includes('darwin') || fileName.includes('mac') || fileName.endsWith('.dmg')) {
+        if (fileName.includes('darwin') ||
+            fileName.match(/\.dmg$/) ||
+            fileName.match(/mac(os)?/i)) {
             os = 'macos';
-        } else if (fileName.includes('win32') || fileName.includes('win') || fileName.endsWith('.exe') || fileName.endsWith('.msi')) {
+        } else if (fileName.includes('win32') ||
+            fileName.match(/\.(exe|msi)$/) ||
+            fileName.includes('windows')) {
             os = 'windows';
-        } else if (
-            fileName.includes('linux') || 
-            fileName.endsWith('.tar.gz') || 
-            fileName.endsWith('.appimage') ||
-            fileName.endsWith('.deb') ||
-            fileName.endsWith('.rpm')
-        ) {
+        } else if (fileName.includes('linux') ||
+            fileName.match(/\.(deb|rpm|appimage)$/) ||
+            (fileName.includes('tar.gz') && !fileName.includes('darwin') && !fileName.includes('win32'))) {
             os = 'linux';
         }
 
-        if (os) {
-            const file: ReleaseFile = {
+        if (os && asset.browser_download_url) {
+            files[os].push({
                 name: asset.name,
                 url: asset.browser_download_url,
-                size: formatFileSize(asset.size),
-                date: asset.created_at
-            };
-            result.files[os].push(file);
+                size: asset.size?.toString() || undefined,
+                date: asset.created_at || undefined
+            });
         }
     });
 
-    // Sort files based on priority
-    for (const os in result.files) {
-        result.files[os as keyof ParsedRelease['files']].sort((a, b) => {
-            const aExt = getFileExtension(a.name);
-            const bExt = getFileExtension(b.name);
-            return filePriority[os as keyof typeof filePriority].indexOf(aExt) -
-                filePriority[os as keyof typeof filePriority].indexOf(bExt);
-        });
-    }
-
-    return result;
+    return {
+        version: undefined,
+        files
+    };
 }
 
 function getFileExtension(fileName: string): string {

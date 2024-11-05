@@ -13,6 +13,8 @@
   interface ReleaseFile {
     name: string;
     url: string;
+    size?: string;
+    date?: string;
   }
 
   onMount(async () => {
@@ -47,10 +49,12 @@
   }
 
   function getOsIcon(os: string): string {
-    switch (os) {
+    switch (os.toLowerCase()) {
       case 'macos':
+      case 'darwin':
         return 'fa-apple';
       case 'windows':
+      case 'win32':
         return 'fa-windows';
       case 'linux':
         return 'fa-linux';
@@ -68,16 +72,24 @@
   }
 
   function getFilesForOS(os: 'macos' | 'windows' | 'linux'): ReleaseFile[] {
-    return parsedRelease.files[os];
+    if (!parsedRelease?.files) return [];
+    return parsedRelease.files[os] || [];
   }
 
   function getOSFiles() {
-    return ['macos', 'windows', 'linux'].flatMap((os) =>
-      getFilesForOS(os as 'macos' | 'windows' | 'linux').map((file) => ({
-        os,
-        file,
-      })),
-    );
+    if (!parsedRelease?.files) return [];
+    return ['macos', 'windows', 'linux'].flatMap((os) => {
+      const files = getFilesForOS(os as 'macos' | 'windows' | 'linux');
+      return files
+        .filter(
+          (file) =>
+            !file.name.endsWith('.sha1') && !file.name.endsWith('.sha256'),
+        )
+        .map((file) => ({
+          os,
+          file,
+        }));
+    });
   }
 </script>
 
@@ -119,7 +131,12 @@
       </thead>
       <tbody class="bg-white divide-y divide-gray-200">
         {#each getOSFiles() as { os, file }}
-          {@const { name, type, arch } = mapFileToUserFriendlyName(file)}
+          {@const { name, type, arch } = mapFileToUserFriendlyName({
+            name: file.name,
+            url: file.url,
+            size: file.size || '0 B',
+            date: file.date || new Date().toISOString(),
+          })}
           {#if !file.name.endsWith('.sha1') && !file.name.endsWith('.sha256')}
             <tr>
               <td class="px-6 py-4 whitespace-nowrap">
