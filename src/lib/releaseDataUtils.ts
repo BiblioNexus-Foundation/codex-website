@@ -7,6 +7,9 @@ export const fileTypeMap = {
     sha1: "SHA1 Checksum",
     sha256: "SHA256 Checksum",
     AppImage: "AppImage",
+    deb: "Debian Package",
+    rpm: "RPM Package",
+    zsync: "ZSync File",
 };
 
 export const filePriority = {
@@ -36,22 +39,32 @@ export function mapFileToUserFriendlyName(file: ReleaseFile): { name: string; ty
     const fileType = extension ? fileTypeMap[extension as keyof typeof fileTypeMap] : "File";
 
     let arch = "Universal";
-    if (file.name.toLowerCase().includes("arm64")) {
+    const fileName = file.name.toLowerCase();
+    
+    if (fileName.includes("arm64")) {
         arch = "ARM64";
-    } else if (file.name.toLowerCase().includes("x64") || file.name.toLowerCase().includes("x86_64")) {
+    } else if (fileName.includes("armhf")) {
+        arch = "ARM (32-bit)";
+    } else if (fileName.includes("riscv64")) {
+        arch = "RISC-V 64";
+    } else if (fileName.includes("ppc64le")) {
+        arch = "PowerPC 64 LE";
+    } else if (fileName.includes("x64") || fileName.includes("x86_64") || fileName.includes("amd64")) {
         arch = "64-bit";
     }
 
     let type = fileType;
-    if (file.name.toLowerCase().includes("reh")) {
+    if (fileName.includes("reh")) {
         type = "Remote Extension Host";
     }
 
     let name = file.name;
-    if (file.name.toLowerCase().includes("usersetup")) {
+    if (fileName.includes("usersetup")) {
         name = "User Install";
-    } else if (file.name.toLowerCase().includes("setup")) {
+    } else if (fileName.includes("setup")) {
         name = "System Install";
+    } else if (fileName.includes("updates-disabled")) {
+        name = "System Install (No Updates)";
     }
 
     return { name, type, arch };
@@ -69,9 +82,15 @@ export function parseReleaseData(assets: any[]): ParsedRelease {
 
         if (fileName.includes('darwin') || fileName.includes('mac') || fileName.endsWith('.dmg')) {
             os = 'macos';
-        } else if (fileName.includes('win') || fileName.endsWith('.exe') || fileName.endsWith('.msi')) {
+        } else if (fileName.includes('win32') || fileName.includes('win') || fileName.endsWith('.exe') || fileName.endsWith('.msi')) {
             os = 'windows';
-        } else if (fileName.includes('linux') || fileName.endsWith('.tar.gz') || fileName.endsWith('.appimage')) {
+        } else if (
+            fileName.includes('linux') || 
+            fileName.endsWith('.tar.gz') || 
+            fileName.endsWith('.appimage') ||
+            fileName.endsWith('.deb') ||
+            fileName.endsWith('.rpm')
+        ) {
             os = 'linux';
         }
 

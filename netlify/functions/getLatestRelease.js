@@ -1,12 +1,12 @@
 const fetch = require('node-fetch');
 
-exports.handler = async function(event, context) {
+exports.handler = async function (event, context) {
   try {
     const response = await fetch(
       'https://api.github.com/repos/BiblioNexus-Foundation/codex/releases/latest'
     );
     const releaseData = await response.json();
-    
+
     return {
       statusCode: 200,
       body: JSON.stringify(releaseData)
