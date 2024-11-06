@@ -24,7 +24,7 @@
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const releaseData = await response.json();
-      parsedRelease = parseReleaseData(releaseData.assets, releaseData);
+      parsedRelease = parseReleaseData(releaseData.assets);
     } catch (e) {
       console.error('Failed to fetch release data:', e);
       error = 'Failed to load release data. Please try again later.';
@@ -35,21 +35,20 @@
     switch (type) {
       case 'ZIP Archive':
       case 'Tarball':
-        return 'bg-blue-100 text-blue-800';
+        return 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200';
       case 'Disk Image':
-        return 'bg-green-100 text-green-800';
+        return 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200';
       case 'Installer':
       case 'Windows Installer':
-        return 'bg-purple-100 text-purple-800';
+        return 'bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200';
       case 'Remote Extension Host':
-        return 'bg-yellow-100 text-yellow-800';
+        return 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200';
     }
   }
 
   function getOsIcon(os: string): string {
-    console.log('os', os);
     switch (os.toLowerCase()) {
       case 'macos':
       case 'darwin':
@@ -100,37 +99,39 @@
   {:else if !parsedRelease}
     <p>Loading...</p>
   {:else}
-    <table class="min-w-full divide-y divide-gray-200">
-      <thead class="bg-gray-50">
+    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+      <thead class="bg-gray-50 dark:bg-gray-800">
         <tr>
           <th
             scope="col"
-            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
             >OS</th
           >
           <th
             scope="col"
-            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
             >File</th
           >
           <th
             scope="col"
-            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
             >Type</th
           >
           <th
             scope="col"
-            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
             >Architecture</th
           >
           <th
             scope="col"
-            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
             >Checksums</th
           >
         </tr>
       </thead>
-      <tbody class="bg-white divide-y divide-gray-200">
+      <tbody
+        class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700"
+      >
         {#each getOSFiles() as { os, file }}
           {@const { name, type, arch } = mapFileToUserFriendlyName({
             name: file.name,
@@ -139,12 +140,14 @@
             date: file.date || new Date().toISOString(),
           })}
           {#if !file.name.endsWith('.sha1') && !file.name.endsWith('.sha256')}
-            <tr>
+            <tr class="hover:bg-gray-50 dark:hover:bg-gray-800">
               <td class="px-6 py-4 whitespace-nowrap">
-                <i class="fab {getOsIcon(os)} text-xl"></i>
+                <i class="fab {getOsIcon(os)} text-xl dark:text-gray-300"></i>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <a href={file.url} class="text-blue-600 hover:text-blue-800"
+                <a
+                  href={file.url}
+                  class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
                   >{name}</a
                 >
               </td>
@@ -159,7 +162,7 @@
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <span
-                  class="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800"
+                  class="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300"
                 >
                   {arch}
                 </span>
@@ -172,7 +175,7 @@
                       <a
                         href={checksumFiles.sha1.url}
                         title="SHA1 Checksum"
-                        class="text-gray-500 hover:text-gray-700"
+                        class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
                       >
                         <FileCheck size={16} />
                         <span class="sr-only">SHA1</span>
@@ -182,7 +185,7 @@
                       <a
                         href={checksumFiles.sha256.url}
                         title="SHA256 Checksum"
-                        class="text-gray-500 hover:text-gray-700"
+                        class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
                       >
                         <FileCheck size={16} />
                         <span class="sr-only">SHA256</span>

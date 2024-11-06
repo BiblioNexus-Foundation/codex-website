@@ -30,7 +30,7 @@
   const osConfig = {
     macos: {
       icon: 'fa-apple',
-      text: 'Download for macOS',
+      text: 'macOS',
       gradient: 'from-green-400 via-teal-500 to-blue-600',
       hoverGradient: 'hover:from-teal-600 hover:via-teal-500 hover:to-blue-700',
       ring: 'focus:ring-teal-400',
@@ -38,7 +38,7 @@
     },
     windows: {
       icon: 'fa-windows',
-      text: 'Download for Windows',
+      text: 'Windows',
       gradient: 'from-yellow-500 via-orange-400 to-red-600',
       hoverGradient:
         'hover:from-orange-600 hover:via-orange-500 hover:to-red-700',
@@ -47,7 +47,7 @@
     },
     linux: {
       icon: 'fa-linux',
-      text: 'Download for Linux (Deb)',
+      text: 'Linux (Deb)',
       gradient: 'from-purple-500 via-pink-400 to-red-600',
       hoverGradient: 'hover:from-pink-600 hover:via-pink-500 hover:to-red-700',
       ring: 'focus:ring-pink-400',

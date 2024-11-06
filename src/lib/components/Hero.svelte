@@ -1,5 +1,6 @@
 <script lang="ts">
   import AllDownloadButtons from './AllDownloadButtons.svelte';
+  import { themeStore } from '$lib/themeStore';
 </script>
 
 <div
@@ -17,9 +18,9 @@
     <AllDownloadButtons />
 
     <img
-      src="/genesis-ui.jpg"
+      src={$themeStore ? '/codex-main-dark.png' : '/codex-main-light.png'}
       class="relative z-50 rounded-xl md:w-auto"
-      alt="Genesis UI"
+      alt="Codex"
     />
     <!-- SVG backgrounds -->
     <div
