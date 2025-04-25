@@ -29,6 +29,7 @@
     "@sveltejs/adapter-static": "^3.0.2",
     "lucide-svelte": "^0.408.0",
     "node-fetch": "2",
+    "tr46": "^4.1.1",
     "whatwg-url": "^14.2.0"
   }
 }
