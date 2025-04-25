@@ -1,5 +1,4 @@
-const fetch = require('node-fetch');
-
+// Using native fetch available in Node.js environments on Netlify
 exports.handler = async function (event, context) {
   try {
     const response = await fetch(
