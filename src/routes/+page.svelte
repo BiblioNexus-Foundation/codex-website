@@ -75,10 +75,6 @@
     position: relative;
   }
 
-  .custom-style {
-    @apply italic;
-  }
-
   .alert-banner {
     background: linear-gradient(-45deg, #ff6b6b, #ff9e40, #ffd166, #ff7e5f);
     background-size: 400% 400%;
