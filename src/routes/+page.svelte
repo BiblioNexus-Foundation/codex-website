@@ -23,40 +23,58 @@
   <meta name="og:locale" content="en_US" />
 </svelte:head>
 
-<div class="alert-banner">
-  <div class="alert-content">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="alert-icon"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    >
-      <path
-        d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
-      ></path>
-      <line x1="12" y1="9" x2="12" y2="13"></line>
-      <line x1="12" y1="17" x2="12.01" y2="17"></line>
-    </svg>
-    <span
-      >Open VSX Marketplace is currently down - <a
-        href="/extensions"
-        class="alert-link">Download extensions directly here</a
-      ></span
-    >
+<div class="page-wrapper">
+  <div class="alert-banner">
+    <div class="alert-content">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="alert-icon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path
+          d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
+        ></path>
+        <line x1="12" y1="9" x2="12" y2="13"></line>
+        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+      </svg>
+      <span
+        >Open VSX Marketplace is currently down - <a
+          href="/extensions"
+          class="alert-link">Download extensions directly here</a
+        ></span
+      >
+    </div>
   </div>
+
+  <Hero />
+  <Features />
+  <TranslationTools />
+  <OpenSource />
+  <CallToAction />
 </div>
 
-<Hero />
-<Features />
-<TranslationTools />
-<OpenSource />
-<CallToAction />
-
 <style lang="postcss">
+  :global(body) {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  :global(img) {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .page-wrapper {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+  }
+
   .custom-style {
     @apply italic;
   }
@@ -97,6 +115,7 @@
   .alert-icon {
     width: 20px;
     height: 20px;
+    flex-shrink: 0;
   }
 
   .alert-link {
