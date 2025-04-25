@@ -1,22 +1,60 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+
   // Extension file metadata
   const extensions = [
     {
       name: 'Codex Editor Extension',
       version: '0.3.12',
       filename: 'codex-editor-extension-0.3.12.vsix',
+      id: 'editor',
     },
     {
       name: 'Frontier Authentication',
       version: '0.3.3',
       filename: 'frontier-authentication-0.3.3.vsix',
+      id: 'auth',
     },
     {
       name: 'Shared State Store',
       version: '0.0.2',
       filename: 'shared-state-store-0.0.2.vsix',
+      id: 'store',
     },
   ];
+
+  // Track downloaded extensions
+  let downloadedExtensions = {};
+
+  onMount(() => {
+    // Load download state from localStorage
+    try {
+      const saved = localStorage.getItem('codex-downloaded-extensions');
+      if (saved) {
+        downloadedExtensions = JSON.parse(saved);
+      }
+    } catch (e) {
+      console.error('Failed to load download state:', e);
+    }
+  });
+
+  function handleDownload(extension) {
+    // Mark as downloaded
+    downloadedExtensions[extension.id] = true;
+
+    // Save to localStorage
+    try {
+      localStorage.setItem(
+        'codex-downloaded-extensions',
+        JSON.stringify(downloadedExtensions),
+      );
+    } catch (e) {
+      console.error('Failed to save download state:', e);
+    }
+
+    // Force component update
+    downloadedExtensions = { ...downloadedExtensions };
+  }
 </script>
 
 <svelte:head>
@@ -34,25 +72,51 @@
     </p>
     <div class="my-6 flex flex-col items-center gap-4">
       {#each extensions as extension}
-        <a href={extension.filename} class="download-button" download>
-          <svg
-            class="download-icon"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
-          </svg>
-          <span
-            >{extension.name}
-            <span class="version">v{extension.version}</span></span
-          >
+        <a
+          href={extension.filename}
+          class="download-button {downloadedExtensions[extension.id]
+            ? 'downloaded'
+            : ''}"
+          download
+          on:click={() => handleDownload(extension)}
+        >
+          {#if downloadedExtensions[extension.id]}
+            <svg
+              class="check-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>
+              Download Again
+              <span class="version">v{extension.version}</span>
+            </span>
+          {:else}
+            <svg
+              class="download-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span>
+              {extension.name}
+              <span class="version">v{extension.version}</span>
+            </span>
+          {/if}
         </a>
       {/each}
     </div>
@@ -99,6 +163,10 @@
       0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
 
+  .download-button.downloaded {
+    background-color: #10b981;
+  }
+
   .download-button:hover {
     background-color: #4338ca;
     transform: translateY(-2px);
@@ -107,9 +175,18 @@
       0 4px 6px -2px rgba(0, 0, 0, 0.05);
   }
 
-  .download-icon {
+  .download-button.downloaded:hover {
+    background-color: #059669;
+  }
+
+  .download-icon,
+  .check-icon {
     width: 20px;
     height: 20px;
+  }
+
+  .check-icon {
+    stroke-width: 3;
   }
 
   .version {
