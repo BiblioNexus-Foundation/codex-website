@@ -201,6 +201,7 @@
   }
 
   .note {
+    display: none; /* The outage is over */
     background-color: #fff3cd;
     border: 1px solid #ffeeba;
     border-radius: 4px;

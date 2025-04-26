@@ -43,9 +43,9 @@
         <line x1="12" y1="17" x2="12.01" y2="17"></line>
       </svg>
       <span
-        >Open VSX Marketplace is currently down - <a
+        >The Open VSX Marketplace is back online - <a
           href="/extensions"
-          class="alert-link">Download extensions directly here</a
+          class="alert-link">You can still download extensions directly here</a
         ></span
       >
     </div>
