@@ -34,7 +34,7 @@
       gradient: 'from-green-400 via-teal-500 to-blue-600',
       hoverGradient: 'hover:from-teal-600 hover:via-teal-500 hover:to-blue-700',
       ring: 'focus:ring-teal-400',
-      options: ['M1/M2/M3', 'Intel'],
+      options: ['Apple Silicon', 'Intel'],
     },
     windows: {
       icon: 'fa-windows',
@@ -65,7 +65,7 @@
     switch (os) {
       case 'macos':
         file = files.find((f: ReleaseFile) =>
-          option === 'M1/M2/M3'
+          option === 'Apple Silicon'
             ? f.name.includes('arm64') && f.name.endsWith('.dmg')
             : f.name.includes('x64') && f.name.endsWith('.dmg'),
         );
@@ -92,15 +92,23 @@
     return file ? file.url : '#';
   }
 
-  function handleToggleDropdown() {
-    toggleDropdown(os);
+  function shouldShowDropdown(): boolean {
+    return config.options.length > 1;
   }
 
-  function shouldShowDropdown(): boolean {
-    return (
-      config.options.length > 1 ||
-      (os === 'windows' && config.options.length === 1)
-    );
+  function handleButtonClick() {
+    if (os === 'windows' && config.options.length === 1) {
+      window.location.href = getDownloadUrl(config.options[0]);
+    } else {
+      toggleDropdown(os);
+    }
+  }
+
+  function handleDownload(option: string) {
+    const url = getDownloadUrl(option);
+    if (url !== '#') {
+      window.location.href = url;
+    }
   }
 </script>
 
@@ -111,7 +119,7 @@
     <p>Loading...</p>
   {:else}
     <button
-      on:click={handleToggleDropdown}
+      on:click={handleButtonClick}
       class="block w-full rounded-md bg-gradient-to-br {config.gradient} py-3 px-4 font-medium text-white {config.hoverGradient} focus:outline-none focus:ring-2 {config.ring} animate-gradient-x"
     >
       <div class="flex items-center justify-center space-x-2">
@@ -125,19 +133,22 @@
       >
         <div class="py-1">
           {#each config.options as option}
-            <a
-              href={getDownloadUrl(option)}
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            <button
+              on:click={() => handleDownload(option)}
+              class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
             >
               {option}
-            </a>
+            </button>
           {/each}
         </div>
       </div>
     {:else if !shouldShowDropdown()}
-      <a href={getDownloadUrl(config.options[0])} class="sr-only">
+      <button
+        on:click={() => handleDownload(config.options[0])}
+        class="sr-only"
+      >
         Download {config.text} ({config.options[0]})
-      </a>
+      </button>
     {/if}
   {/if}
 </div>
