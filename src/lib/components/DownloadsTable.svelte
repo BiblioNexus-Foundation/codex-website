@@ -91,12 +91,6 @@
         }));
     });
   }
-
-  function handleDownload(url: string) {
-    if (url && url !== '#') {
-      window.location.href = url;
-    }
-  }
 </script>
 
 <div class="overflow-x-auto">
@@ -151,10 +145,10 @@
                 <i class="fab {getOsIcon(os)} text-xl dark:text-gray-300"></i>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <button
-                  on:click={() => handleDownload(file.url)}
-                  class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 text-left"
-                  >{name}</button
+                <a
+                  href={file.url}
+                  class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                  >{name}</a
                 >
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
@@ -178,25 +172,24 @@
                   {#if parsedRelease}
                     {@const checksumFiles = getChecksumFiles(os, file.name)}
                     {#if checksumFiles.sha1}
-                      <button
-                        on:click={() => handleDownload(checksumFiles.sha1.url)}
+                      <a
+                        href={checksumFiles.sha1.url}
                         title="SHA1 Checksum"
                         class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
                       >
                         <FileCheck size={16} />
                         <span class="sr-only">SHA1</span>
-                      </button>
+                      </a>
                     {/if}
                     {#if checksumFiles.sha256}
-                      <button
-                        on:click={() =>
-                          handleDownload(checksumFiles.sha256.url)}
+                      <a
+                        href={checksumFiles.sha256.url}
                         title="SHA256 Checksum"
                         class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
                       >
                         <FileCheck size={16} />
                         <span class="sr-only">SHA256</span>
-                      </button>
+                      </a>
                     {/if}
                   {/if}
                 </div>

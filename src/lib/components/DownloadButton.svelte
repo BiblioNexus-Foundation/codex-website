@@ -97,18 +97,7 @@
   }
 
   function handleButtonClick() {
-    if (os === 'windows' && config.options.length === 1) {
-      window.location.href = getDownloadUrl(config.options[0]);
-    } else {
-      toggleDropdown(os);
-    }
-  }
-
-  function handleDownload(option: string) {
-    const url = getDownloadUrl(option);
-    if (url !== '#') {
-      window.location.href = url;
-    }
+    toggleDropdown(os);
   }
 </script>
 
@@ -118,37 +107,46 @@
   {:else if !parsedRelease}
     <p>Loading...</p>
   {:else}
-    <button
-      on:click={handleButtonClick}
-      class="block w-full rounded-md bg-gradient-to-br {config.gradient} py-3 px-4 font-medium text-white {config.hoverGradient} focus:outline-none focus:ring-2 {config.ring} animate-gradient-x"
-    >
-      <div class="flex items-center justify-center space-x-2">
-        <i class="fab {config.icon} text-2xl text-white"></i>
-        <span class="text-base">{config.text}</span>
-      </div>
-    </button>
+    {#if os === 'windows' && config.options.length === 1}
+      <a
+        href={getDownloadUrl(config.options[0])}
+        class="block w-full rounded-md bg-gradient-to-br {config.gradient} py-3 px-4 font-medium text-white {config.hoverGradient} focus:outline-none focus:ring-2 {config.ring} animate-gradient-x"
+      >
+        <div class="flex items-center justify-center space-x-2">
+          <i class="fab {config.icon} text-2xl text-white"></i>
+          <span class="text-base">{config.text}</span>
+        </div>
+      </a>
+    {:else}
+      <button
+        on:click={handleButtonClick}
+        class="block w-full rounded-md bg-gradient-to-br {config.gradient} py-3 px-4 font-medium text-white {config.hoverGradient} focus:outline-none focus:ring-2 {config.ring} animate-gradient-x"
+      >
+        <div class="flex items-center justify-center space-x-2">
+          <i class="fab {config.icon} text-2xl text-white"></i>
+          <span class="text-base">{config.text}</span>
+        </div>
+      </button>
+    {/if}
     {#if showDropdown && shouldShowDropdown()}
       <div
         class="absolute mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-[60]"
       >
         <div class="py-1">
           {#each config.options as option}
-            <button
-              on:click={() => handleDownload(option)}
-              class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            <a
+              href={getDownloadUrl(option)}
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
             >
               {option}
-            </button>
+            </a>
           {/each}
         </div>
       </div>
     {:else if !shouldShowDropdown()}
-      <button
-        on:click={() => handleDownload(config.options[0])}
-        class="sr-only"
-      >
+      <a href={getDownloadUrl(config.options[0])} class="sr-only">
         Download {config.text} ({config.options[0]})
-      </button>
+      </a>
     {/if}
   {/if}
 </div>
