@@ -77,14 +77,15 @@
         break;
       case 'linux':
         // Prioritize .deb files, then fall back to .AppImage
+        const searchTerm = option === 'x64' ? 'amd64' : option;
         file =
           files.find(
             (f: ReleaseFile) =>
-              f.name.includes(option) && f.name.endsWith('.deb'),
+              f.name.includes(searchTerm) && f.name.endsWith('.deb'),
           ) ||
           files.find(
             (f: ReleaseFile) =>
-              f.name.includes(option) && f.name.endsWith('.AppImage'),
+              f.name.includes(searchTerm) && f.name.endsWith('.AppImage'),
           );
         break;
     }
