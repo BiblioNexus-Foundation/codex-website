@@ -17,12 +17,16 @@
   <div class="mx-auto max-w-4xl">
     <AllDownloadButtons />
 
-    <img
-      src={$themeStore ? '/codex-main-dark.png' : '/codex-main-light.png'}
-      class="mt-20 relative z-50 transition-transform duration-300 hover:scale-105"
-      style="border-radius: 10px; width: 100%; height: auto; align-self: center; transform: rotateX(35deg) rotateY(-20deg) rotate(5deg) translateZ(0px) scale(1.15); box-shadow: 0 10px 20px rgba(0,0,0,.3); transform-origin: center; -webkit-mask-image: linear-gradient(180deg,rgba(0,0,0,1) 70%,rgba(0,0,0,0)); mask-image: linear-gradient(180deg,rgba(0,0,0,1) 70%,rgba(0,0,0,0)); border: 1px solid rgba(0,0,0,.2);"
-      alt="Codex"
-    />
+    <div
+      style="max-width: 800px; margin: 4rem auto; perspective: 1000px; transform-style: preserve-3d; text-align: center; padding-top: 40px;"
+    >
+      <img
+        src={$themeStore ? '/codex-main-dark.png' : '/codex-main-light.png'}
+        class="transition-transform duration-300 hover:scale-105"
+        style="border-radius: 10px; width: 100%; height: auto; align-self: center; transform: rotateX(25deg) rotateY(-20deg) rotate(5deg) translateZ(120px); box-shadow: 0 10px 20px rgba(0,0,0,.3); transform-origin: center; -webkit-mask-image: linear-gradient(180deg,rgba(0,0,0,1) 70%,rgba(0,0,0,0)); mask-image: linear-gradient(180deg,rgba(0,0,0,1) 70%,rgba(0,0,0,0)); border: 1px solid rgba(0,0,0,.2);"
+        alt="Codex"
+      />
+    </div>
     <!-- SVG backgrounds -->
     <div
       class="absolute top-[30rem] left-1/2 -ml-[40rem] w-[163.125rem] max-w-none sm:-ml-[37.5rem]"
