@@ -19,7 +19,8 @@
 
     <img
       src={$themeStore ? '/codex-main-dark.png' : '/codex-main-light.png'}
-      class="relative z-50 rounded-xl md:w-auto"
+      class="mt-20 relative z-50 transition-transform duration-300 hover:scale-105"
+      style="border-radius: 10px; width: 100%; height: auto; align-self: center; transform: rotateX(35deg) rotateY(-20deg) rotate(5deg) translateZ(0px) scale(1.15); box-shadow: 0 10px 20px rgba(0,0,0,.3); transform-origin: center; -webkit-mask-image: linear-gradient(180deg,rgba(0,0,0,1) 70%,rgba(0,0,0,0)); mask-image: linear-gradient(180deg,rgba(0,0,0,1) 70%,rgba(0,0,0,0)); border: 1px solid rgba(0,0,0,.2);"
       alt="Codex"
     />
     <!-- SVG backgrounds -->
