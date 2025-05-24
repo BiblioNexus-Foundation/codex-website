@@ -13,7 +13,7 @@
         Codex App & Translator's Copilot
       </h1>
       <p class="text-neutral-600">
-        Inspired by VS Code, reimagined for translation excellence.
+        Bringing the power of AI to your translation workflow.
       </p>
     </div>
     <div class="flex flex-col space-y-6 md:space-y-10">
@@ -48,7 +48,7 @@
         <FeatureCard
           icon="settings"
           title="Codex App: A robust translation editor"
-          description="A robust translation editor that is simple and intuitive at first glance, but powerful and customizable when you need it."
+          description="Simple and intuitive at first glance, but powerful and customizable when you need it."
         />
       </div>
     </div>
