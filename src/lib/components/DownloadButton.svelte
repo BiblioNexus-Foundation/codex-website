@@ -34,7 +34,7 @@
       gradient: 'from-green-400 via-teal-500 to-blue-600',
       hoverGradient: 'hover:from-teal-600 hover:via-teal-500 hover:to-blue-700',
       ring: 'focus:ring-teal-400',
-      options: ['M1/M2/M3', 'Intel'],
+      options: ['Apple Silicon', 'Intel'],
     },
     windows: {
       icon: 'fa-windows',
@@ -65,7 +65,7 @@
     switch (os) {
       case 'macos':
         file = files.find((f: ReleaseFile) =>
-          option === 'M1/M2/M3'
+          option === 'Apple Silicon'
             ? f.name.includes('arm64') && f.name.endsWith('.dmg')
             : f.name.includes('x64') && f.name.endsWith('.dmg'),
         );
@@ -77,14 +77,15 @@
         break;
       case 'linux':
         // Prioritize .deb files, then fall back to .AppImage
+        const searchTerm = option === 'x64' ? 'amd64' : option;
         file =
           files.find(
             (f: ReleaseFile) =>
-              f.name.includes(option) && f.name.endsWith('.deb'),
+              f.name.includes(searchTerm) && f.name.endsWith('.deb'),
           ) ||
           files.find(
             (f: ReleaseFile) =>
-              f.name.includes(option) && f.name.endsWith('.AppImage'),
+              f.name.includes(searchTerm) && f.name.endsWith('.AppImage'),
           );
         break;
     }
@@ -92,15 +93,12 @@
     return file ? file.url : '#';
   }
 
-  function handleToggleDropdown() {
-    toggleDropdown(os);
+  function shouldShowDropdown(): boolean {
+    return config.options.length > 1;
   }
 
-  function shouldShowDropdown(): boolean {
-    return (
-      config.options.length > 1 ||
-      (os === 'windows' && config.options.length === 1)
-    );
+  function handleButtonClick() {
+    toggleDropdown(os);
   }
 </script>
 
@@ -110,15 +108,27 @@
   {:else if !parsedRelease}
     <p>Loading...</p>
   {:else}
-    <button
-      on:click={handleToggleDropdown}
-      class="block w-full rounded-md bg-gradient-to-br {config.gradient} py-3 px-4 font-medium text-white {config.hoverGradient} focus:outline-none focus:ring-2 {config.ring} animate-gradient-x"
-    >
-      <div class="flex items-center justify-center space-x-2">
-        <i class="fab {config.icon} text-2xl text-white"></i>
-        <span class="text-base">{config.text}</span>
-      </div>
-    </button>
+    {#if os === 'windows' && config.options.length === 1}
+      <a
+        href={getDownloadUrl(config.options[0])}
+        class="block w-full rounded-md bg-gradient-to-br {config.gradient} py-3 px-4 font-medium text-white {config.hoverGradient} focus:outline-none focus:ring-2 {config.ring} animate-gradient-x"
+      >
+        <div class="flex items-center justify-center space-x-2">
+          <i class="fab {config.icon} text-2xl text-white"></i>
+          <span class="text-base">{config.text}</span>
+        </div>
+      </a>
+    {:else}
+      <button
+        on:click={handleButtonClick}
+        class="block w-full rounded-md bg-gradient-to-br {config.gradient} py-3 px-4 font-medium text-white {config.hoverGradient} focus:outline-none focus:ring-2 {config.ring} animate-gradient-x"
+      >
+        <div class="flex items-center justify-center space-x-2">
+          <i class="fab {config.icon} text-2xl text-white"></i>
+          <span class="text-base">{config.text}</span>
+        </div>
+      </button>
+    {/if}
     {#if showDropdown && shouldShowDropdown()}
       <div
         class="absolute mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-[60]"
