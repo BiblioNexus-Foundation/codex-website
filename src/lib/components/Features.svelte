@@ -22,13 +22,13 @@
       >
         <FeatureCard
           icon="message-circle"
-          title="Translator's Copilot"
-          description="Your AI ally, offering contextual suggestions and seamless chat interfaces for unparalleled assistance."
+          title="All-in-one Translation Tools"
+          description="Translate subtitles, books, bibles, and more with the power of AI."
         />
         <FeatureCard
           icon="hash"
           title="Multimodal Inputs & Outputs"
-          description="Embracing a spectrum of audio and visual resources to enrich the translation experience."
+          description="(In Development!) Embracing a spectrum of audio and visual resources to enrich the translation experience."
         />
         <FeatureCard
           icon="wifi-off"
