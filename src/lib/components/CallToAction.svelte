@@ -19,6 +19,21 @@
         standards in translation technology.
       </p>
     </div>
+
+    <blockquote
+      class="max-w-4xl border-l-4 border-teal-500 bg-white/50 p-6 italic text-gray-700 backdrop-blur-sm"
+    >
+      <p class="text-lg leading-relaxed">
+        "We still do not understand the cultural and social implications of the
+        translator's verbal choices, and no consensus has developed as to how
+        translations might be written and read or even what sort of
+        communicative act translation is."
+      </p>
+      <cite class="mt-4 block text-sm font-medium text-gray-500">
+        — Lawrence Venuti, Translation Changes Everything (2013: 248)
+      </cite>
+    </blockquote>
+
     <div class="max-4xl flex flex-col space-y-4">
       <a
         href="/downloads"
