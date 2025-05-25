@@ -3,43 +3,42 @@
   import Logo from './Logo.svelte';
 </script>
 
-<footer class="bg-white dark:bg-gray-800">
-  <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
-      <div class="col-span-2">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div class="space-y-8 flex flex-col items-center justify-center">
-            <Logo size="large" />
-            <p class="text-gray-500 dark:text-gray-100 text-base">
-              Fully Open, Completely Free.
-            </p>
-          </div>
-          <div>
-            <h3
-              class="text-sm font-semibold text-gray-400 dark:text-gray-100 tracking-wider uppercase"
-            >
-              Navigation
-            </h3>
-            <div class="mt-4">
-              <Navigation orientation="horizontal" />
-            </div>
-          </div>
-          <div></div>
-          <!-- You can add more columns here if needed -->
-        </div>
+<footer
+  class="bg-white dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700"
+>
+  <div class="max-w-4xl mx-auto py-16 px-4 text-center">
+    <div class="space-y-8">
+      <div class="flex justify-center items-center">
+        <Logo size="large" />
+      </div>
+
+      <div class="space-y-4">
+        <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">
+          Translation, reimagined.
+        </h2>
+        <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          AI-first translation that feels like magic. Simple, powerful, and
+          built for the future.
+        </p>
+      </div>
+
+      <div class="pt-4 flex justify-center items-center">
+        <Navigation orientation="horizontal" />
       </div>
     </div>
-    <div class="mt-12 border-t border-gray-200 dark:border-gray-700 pt-8">
-      <p class="text-base text-gray-400 dark:text-gray-100 xl:text-center">
-        &copy; {new Date().getFullYear()}
-        <a href="https://frontierrnd.com" class="hover:underline text-blue-500"
-          >Frontier R&D Ltd.</a
+
+    <div class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-600">
+      <p class="text-sm text-gray-500 dark:text-gray-400">
+        Made with vibes by <a
+          href="https://frontierrnd.com"
+          class="text-blue-600 hover:text-blue-700 font-medium">Frontier R&D</a
         >
-        Base app code housed in the
+        • Open source in the
         <a
           href="https://biblionexus.org/foundation"
-          class="hover:underline text-blue-500">BiblioNexus Foundation</a
-        >.
+          class="text-blue-600 hover:text-blue-700 font-medium"
+          >BiblioNexus Foundation</a
+        >
       </p>
     </div>
   </div>

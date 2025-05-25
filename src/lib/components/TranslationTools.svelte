@@ -21,7 +21,7 @@
   });
 </script>
 
-<div class="p-4 mx-auto text-center md:max-w-xl lg:max-w-none">
+<div class="p-4 mx-auto text-center md:max-w-xxl lg:max-w-none">
   <div
     class="flex flex-col items-center space-y-2 py-12 text-center md:space-y-4 md:py-12"
   >
@@ -31,15 +31,15 @@
       </h1>
       <p class="text-neutral-400"></p>
     </div>
-    <div class="flex flex-col space-y-12">
-      <div class="w-full md:max-w-6xl lg:max-w-none justify-between space-y-6">
+    <div class="flex flex-col space-y-12 w-full">
+      <div class="w-full max-w-[90rem] mx-auto justify-between space-y-6">
         <div
           class="flex w-full overflow-hidden rounded-xl bg-neutral-700 text-white"
         >
           <div
-            class="relative flex h-[500px] w-full flex-col overflow-hidden px-10 pt-6 text-left md:h-[500px]"
+            class="relative flex h-[850px] w-full flex-col overflow-hidden px-10 pt-6 text-left md:h-[850px]"
           >
-            <div class="flex flex-col space-y-1">
+            <div class="flex flex-col space-y-1 w-full">
               <h3 class="text-xl font-medium text-white">
                 Advanced Translation Assistance
               </h3>
@@ -47,13 +47,9 @@
                 Get suggestions, corrections, and more in a simple text editor.
               </p>
             </div>
-            <!-- <img
-              class="absolute rounded-xl mt-28 -ml-8 w-full min-w-[700px] md:mt-18 7xl:mt-16"
-              src="/suggestions.png"
-              alt="Translation interface"
-            /> -->
             <img
-              class="absolute rounded-xl mt-28 -ml-8 w-full min-w-[700px] md:mt-18 7xl:mt-16"
+              class="relative rounded-xl mt-28 -ml-8 w-[90%] min-w-[800px] md:mt-18 7xl:mt-16"
+              style="margin-left: auto; margin-right: auto;"
               src={isDarkMode
                 ? '/app-features/batch-translate-dark.gif'
                 : '/app-features/batch-translate.gif'}
