@@ -89,7 +89,7 @@
           </div>
         </div>
       </div>
-      <div class="w-full max-w-6xl justify-between">
+      <div class="hidden w-full max-w-6xl justify-between">
         <div
           class="flex flex-col space-y-12 lg:flex-row lg:space-y-0 lg:space-x-12"
         >

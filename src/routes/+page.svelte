@@ -24,7 +24,7 @@
 </svelte:head>
 
 <div class="page-wrapper">
-  <div class="alert-banner">
+  <div class="hidden alert-banner">
     <div class="alert-content">
       <svg
         xmlns="http://www.w3.org/2000/svg"

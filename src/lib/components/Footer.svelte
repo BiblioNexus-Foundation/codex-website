@@ -32,8 +32,13 @@
     <div class="mt-12 border-t border-gray-200 dark:border-gray-700 pt-8">
       <p class="text-base text-gray-400 dark:text-gray-100 xl:text-center">
         &copy; {new Date().getFullYear()}
-        <a href="https://biblionexus.org/foundation" class="hover:underline"
-          >BiblioNexus Foundation</a
+        <a href="https://frontierrnd.com" class="hover:underline text-blue-500"
+          >Frontier R&D Ltd.</a
+        >
+        Base app code housed in the
+        <a
+          href="https://biblionexus.org/foundation"
+          class="hover:underline text-blue-500">BiblioNexus Foundation</a
         >.
       </p>
     </div>
