@@ -2,6 +2,10 @@
   path = "/api/latest-release"
   function = "getLatestRelease"
 
+[[edge_functions]]
+  path = "/docs/*"
+  function = "docs-proxy"
+
 [functions]
   directory = "netlify/functions"
 
@@ -9,11 +13,6 @@
   command = "npm run build"
   publish = "dist"
   functions = "netlify/functions"
-
-[[redirects]]
-  from = "/docs/*"
-  to = "https://classy-clafoutis-ff4fd0.netlify.app/docs/:splat"
-  status = 200
 
 [[redirects]]
   from = "/*"
